@@ -1,0 +1,133 @@
+*{
+ list-style:none;
+ text-decoration:none;
+ margin:0;
+ padding:0;
+}
+
+body{
+ font-family:'Open Sans', Regular;
+ font-size:100%;
+ width:100%;
+ background-image:url('../img/background.png');
+}
+
+header{
+ height:45px;
+ background:#FA1800;
+ position:fixed;
+ z-index:2;
+ top:0;
+ left:0;
+ width:100%;
+}
+section{
+ position:absolute;
+ z-index:1;
+ top:45px;
+ bottom:45px;
+ width:100%;
+ -webkit-overflow-scrolling:touch;
+ overflow:auto;
+}
+img{
+ width: 50%;
+ height: 20%;
+}
+img.galeria{
+ width: 50%;
+ height: 10%;
+}
+.data table, .data td, .data tr, .data th{
+ border:1px solid green;
+}
+.data th{
+ background-color:green;
+ color:white;
+}
+.data td{
+ padding: 0.3em;
+}
+
+#teenstitle{
+ font-family:'Titillium Web', Ultra-Bold 900;
+ font-weight:bold;
+ font-size:1.3em;
+ padding:0.3em 0em 0em 1em;
+ color:#fff;
+}
+
+footer {
+ height:45px;
+ background:#FE2E2E;
+ clear:both;
+ position:fixed;
+ z-index:2;
+ bottom:0;
+ left:0;
+ width:100%;
+}
+
+#teensfooter{
+ float:right;
+ padding-top: .5em;
+ padding-right: 1.5em;
+ color:#FFFFFF;
+}
+
+#teensfooterlinks{
+ float:left;
+ padding-top: .5em;
+ padding-left: 1.5em;
+}
+
+.valid {
+ color: #4F8A10;
+ background-color: #DFF2BF;
+ width: 40%;
+}
+
+.error {
+ color: #D8000C;
+ width: 40%;
+}
+
+label.error {
+  background: no-repeat;
+}
+.marco {
+  background-color: #FFFFFF;
+  display: block;
+  width: 96%;
+  border-width:thin;
+  border-color:#0000FF;
+  border-style:outset;
+  border-radius:.5em;
+  padding:1%;
+  margin-left:1%;
+  margin-right:1%;
+  margin-bottom:3%;
+  margin-top:5%;
+}
+.marcointerno {
+  background-color:#FFFFFF;
+  display:block;
+  width:90%;
+  border-width:thin;
+  border-color:#0000FF;
+  border-style:outset;
+  border-radius:.5em;
+  padding:1%;
+  margin-left:1%;
+  margin-right:1%;
+  margin-bottom:1%;
+  margin-top: 1%;
+}
+.izq{
+  float: left;
+  margin-right: 2%;
+}
+.der{
+  float: right;
+  margin-left: 2%;
+}
