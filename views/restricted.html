@@ -1,0 +1,44 @@
+<div class="marco">
+ <br /><br />
+ <form id="forma" action="update" method="post">
+  <label for="description">Restricted option: </label>
+  <input id="restricted" type="password" maxlength="50" name="restricted">
+  <br /><br />
+  <input id="boton" type="submit" value="continue">
+  <span id="cargando" style="display:none">
+   Working ...
+  </span>
+  <br />
+ </form>
+</div>
+<script>
+ $("#forma").validate({
+  rules: {
+     restricted: {
+      required: true
+    }
+  },
+  messages: {
+     restricted: {
+      required: "Restricted required"
+    }
+  },
+  submitHandler: function(form) {
+    $("#cargando").css("display", "inline");
+    $('#boton').attr('disabled','disabled');
+    $('#restricted').val(hex_md5($('#restricted').val()));
+    var laurl = $("#forma").attr("action");
+    var ladata = $("#forma").serialize();
+    $.ajax ({
+      type: "POST",
+      url: laurl,
+      data: ladata,
+      cache: false,
+      success: function(response) {
+        $('section').html(response);
+      }
+    });
+  }
+});
+$("input:password:visible:first").focus();
+</script>

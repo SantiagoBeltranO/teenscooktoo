@@ -1,0 +1,36 @@
+ </section>
+  <footer>
+   <div id="teensfooterlinks">
+    <a href="home" id="home">Home</a>
+   </div>
+   <div id="teensfooter">
+    Santiago Beltrán Ochoa
+   </div>
+  </footer>
+ </body>
+</html>
+<script>
+$(document).ready(function(){
+ $("nav a.hoja").each(function(){
+  var href = $(this).attr("href");
+  $(this).attr({ href: "#"});
+  $(this).click(function(){
+   $("section").load(href);
+  });
+ });
+});
+
+$('#home').click(function(evento){
+ evento.preventDefault();
+ $('section').load(this.href);
+});
+</script>
+<style>
+ #topNav {
+  margin-bottom: 7%;
+  margin-top: 1%;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>

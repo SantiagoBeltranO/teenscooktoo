@@ -1,0 +1,40 @@
+<div class="marco">
+ <br />
+ <div class="data">
+   <table>
+    <tr>
+     <th>Name</th>
+     <th>Servings</th>
+     <th>Description</th>
+     <th>Dish details</th>
+    </tr>
+     {% for dish in dishes %}
+    <tr>
+      <td>{{dish.name}}</td>
+      <td>{{dish.servings}}</td>
+      <td>{% autoescape false %}{{dish.description}}{% endautoescape %}</td>
+      <td>
+       <form>
+          <a href="consult" class="consultdish" name="{{dish.key.id()}}">Details</a>
+       </form>
+      </td>
+    </tr>
+     {% endfor %}
+   </table>
+ </div>
+</div>
+<script>
+ $('a.consultdish').click(function(e) {
+  e.preventDefault();
+  var href = $(this).attr("href");
+  var dish_id = $(this).attr("name");
+  $.ajax({
+    type: "POST",
+    url: href,
+    data: {dish_id: dish_id},
+    success: function(data){
+     $('section').html(data)
+    }
+   });
+ });
+</script>

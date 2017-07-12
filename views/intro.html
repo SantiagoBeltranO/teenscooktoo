@@ -1,0 +1,7 @@
+{% if is_ajax %}
+ {% include "introdefault.html" %}
+{% else %}
+ {% include "firstdefault.html" %}
+ {% include "introdefault.html" %}
+ {% include "lastdefault.html" %}
+{% endif %}

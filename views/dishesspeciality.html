@@ -1,0 +1,21 @@
+<label for="dish_id">Dish: </label>
+<select id ="dish_id" name="dish_id" class="error">
+ {% for dish in dishes %}
+  <option value="{{dish[0]}}">{{dish[1]}}</option>
+ {% endfor %}
+</select>
+ <div id="dish">
+ </div>
+<script>
+ $('#dish_id').change(function() {
+  var dish_id = $('#dish_id').val();
+   $.ajax({
+    type: "POST",
+    url: "{{option}}",
+    data: "dish_id=" + dish_id,
+    success: function(data){
+     $('#dish').html(data)
+    }
+   });
+ });
+</script>

@@ -1,0 +1,7 @@
+{% if is_ajax %}
+ {% include "healthdefault.html" %}
+{% else %}
+ {% include "firstdefault.html" %}
+ {% include "healthdefault.html" %}
+ {% include "lastdefault.html" %}
+{% endif %}

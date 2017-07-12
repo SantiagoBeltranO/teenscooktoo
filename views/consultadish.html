@@ -1,0 +1,72 @@
+<div class="marco">
+ <p>{{thedish.name}}</p>
+ <p>Servings: {{thedish.servings}}</p>
+ <br />
+ <div class="marcointerno">
+  {% autoescape false %}{{thedish.description}}{% endautoescape %}
+  <br />
+  <table>
+   <tr>
+    {% if thedish.photo %}
+     <td align="center"><img src="/image?id={{photo}}" /></td>
+    {% endif %}
+    {% if thedish.audio %}
+     <td>
+      <audio controls>
+       <source src="/sound?id={{audio}}" type="audio/mp4" />
+      </audio>
+     </td>
+    {% endif %}
+    {% if thedish.video %}
+     <td>
+      <video controls>
+       <source src="/sound?id={{video}}" type="video/mov" />
+      </video>
+     </td>
+    {% endif %}
+   </tr>
+   <br />
+   </table>
+   <br /><br />
+   <div class="data">
+   <table>
+    <tr>
+     <th>Quantity</th>
+     <th>Unit</th>
+     <th>Ingredient</th>
+    </tr>
+     {% for ingredient in ingredients %}
+    <tr>
+      <td>{{ingredient[1]}}</td>
+      <td>{{ingredient[2]}}</td>
+      <td>{{ingredient[0]}}</td>
+    </tr>
+     {% endfor %}
+   </table>
+   </div>
+ </div>
+ <div class="marcointerno">
+  <h3>Directions</h3>
+  <p>{% autoescape false %}{{thedish.directions}}{% endautoescape %}</p>
+ </div>
+ {% if thedish.photogallery %}
+  <div class="marcointerno">
+   <table>
+    {% set i = 0 %}
+    {% for photo in thedish.photogallery %}
+     {% if i == 0 %}
+      <tr>
+     {% endif %}
+     <td align="center"><img class="galeria" src="/image?id={{photo}}" /></td>
+     {% if i == 4 %}
+      </tr>
+     {% endif %}
+     {% set i = i + 1 %}
+     {% if i == 5 %}
+      {% set i = 0 %}
+     {% endif %}
+    {% endfor %}
+   </table>
+  </div>
+ {% endif %}
+</div>

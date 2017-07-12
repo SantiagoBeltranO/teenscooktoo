@@ -1,0 +1,29 @@
+<div class="marco">
+ <h3>{{option}}</h3>
+ <br />
+ <label for="speciality_id">Speciality: </label>
+ <select id ="speciality_id" name="speciality_id" class="error">
+  {% for speciality in specialities %}
+   <option
+    value="{{speciality[0]}}"
+    >
+    {{speciality[1]}}
+    </option>
+  {% endfor %}
+ </select>
+ <div id="dishesspeciality">
+ </div>
+</div>
+<script>
+ $('#speciality_id').change(function() {
+  var speciality_id = $('#speciality_id').val();
+   $.ajax({
+    type: "POST",
+    url: "dishesspeciality/{{option}}",
+    data: "speciality_id=" + speciality_id,
+    success: function(data){
+     $('#dishesspeciality').html(data)
+    }
+   });
+ });
+</script>

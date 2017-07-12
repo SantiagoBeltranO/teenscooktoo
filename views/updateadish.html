@@ -1,0 +1,277 @@
+<div class="marcointerno">
+ <form id="forma" action="update" method="post">
+  <label for="description">Description: </label>
+  <input name="dish_id" type="hidden" value="{{dish_id}}">
+  <textarea id="description" rows="3" cols="100"name="description">{{thedish.description}}</textarea>
+  <br />
+  <label for="servings">Servings: </label>
+  <input name="servings" type="number" value="{{thedish.servings}}" maxlength="3" size="3">
+  <br />
+  <label for="directions">Directions: </label>
+  <textarea id="directions" rows="3" cols="100"name="directions">{{thedish.directions}}</textarea>
+  <br />
+  <br />
+  <input id="boton" type="submit" value="continue">
+  <span id="cargando" style="display:none">
+   Working ...
+   <img src="/static/img/spinner.gif">
+  </span>
+  <br />
+ </form>
+  <div id="divphoto">
+   {% if thedish.photo %}
+    <br />
+    <a href="photos/{{dish_id}}" id="photodish">See Photo</a>
+   {% endif %}
+   <form id="formaphoto" action="{{upload_url_photo}}" method="post" enctype="multipart/form-data">
+    <label for="photo">Photo: </label>
+    <input id="photo" type="file" name="photo">
+    <br />
+    <input id="botonphoto" type="submit" value="continue">
+    <span id="cargandophoto" style="display:none">
+     Working ...
+     <img src="/static/img/spinner.gif">
+    </span>
+    <br />
+   </form>
+  </div>
+  <div id="divaudio">
+   {% if thedish.audio %}
+    <br />
+    <a href="audios/{{dish_id}}" id="audiodish">Listen Audio</a>
+   {% endif %}
+   <form id="formaaudio" action="{{upload_url_audio}}" method="post" enctype="multipart/form-data">
+    <label for="audio">Audio: </label>
+    <input id="audio" type="file" name="audio">
+    <br />
+    <input id="botonaudio" type="submit" value="continue">
+    <span id="cargandoaudio" style="display:none">
+     Working ...
+     <img src="/static/img/spinner.gif">
+    </span>
+    <br />
+   </form>
+  </div>
+  <div id="divvideo">
+   {% if thedish.video %}
+    <br />
+    <a href="videos/{{dish_id}}" id="videodish">Watch Video</a>
+   {% endif %}
+   <form id="formavideo" action="{{upload_url_video}}" method="post" enctype="multipart/form-data">
+    <label for="audio">Video: </label>
+    <input id="video" type="file" name="video">
+    <br />
+    <input id="botonvideo" type="submit" value="continue">
+    <span id="cargandovideo" style="display:none">
+     Working ...
+     <img src="/static/img/spinner.gif">
+    </span>
+    <br />
+   </form>
+  </div>
+  <div id="divphotogallery">
+   {% if thedish.photogallery %}
+    <br />
+    <a href="photogallery/{{dish_id}}" id="photogallerydish">See Photo</a>
+   {% endif %}
+   <form id="formaphotogallery" action="{{upload_url_photogallery}}" method="post" enctype="multipart/form-data">
+    <label for="photo">Photo Gallery: </label>
+    <input id="photogallery[]" type="file" name="photogallery" multiple>
+    <br />
+    <input id="botonphotogallery" type="submit" value="continue">
+    <span id="cargandophotogallery" style="display:none">
+     Working ...
+     <img src="/static/img/spinner.gif">
+    </span>
+    <br />
+   </form>
+  </div>
+</div>
+<script>
+ $("#forma").validate({
+  rules: {
+    description: {
+      required: true,
+      minlength: 5
+    },
+    servings: {
+      required: true,
+      digits: true
+    },
+    directions: {
+      required: true,
+      minlength: 5
+    }
+  },
+  messages: {
+    description: {
+      required: "Description required",
+      minlength: "At least five characters"
+    },
+    directions: {
+      required: "Directions required",
+      digits: "Only numerics digits"
+    }
+  },
+  submitHandler: function() {
+        $("#cargando").css("display", "inline");
+        $('#boton').attr('disabled','disabled');
+        var laurl = $("#forma").attr("action");
+        var ladata = $("#forma").serialize();
+        $.ajax({
+          type: "POST",
+          url: laurl,
+          data: ladata,
+          cache: false,
+          success: function(response) {
+            $('section').html(response);
+          }
+        });
+      }
+ });
+
+$.validator.addMethod('filesize', function(value, element, param) {
+    // param = size (en bytes)
+    // element = element to validate (<input>)
+    // value = value of the element (file name)
+    return this.optional(element) || (element.files[0].size <= param)
+});
+
+$("#formaphoto").validate({
+  rules: {
+    photo: {
+      required: true,
+      accept: "image/jpeg",
+      filesize: 3145728
+    }
+  },
+  messages: {
+    photo: {
+      required: "Select a file",
+      accept: "File must be jpeg",
+      filesize: "Max allowed: 3MB"
+    }
+  },
+  submitHandler: function(e) {
+   e.preventDefault();
+   $("#cargandophoto").css("display", "inline");
+   $('#botonphoto').attr('disabled','disabled');
+    var laurl = $("#formaphoto").attr("action");
+    var ladata = $("#formaphoto").serializefiles();
+    $.ajax({
+     enctype: "multipart/form-data",
+     type: "POST",
+     url: laurl,
+     data: ladata,
+     cache: false,
+     success: function(response) {
+      $('section').html(response);
+     }
+    });
+   }
+});
+
+$("#formaaudio").validate({
+  rules: {
+    audio: {
+      required: true,
+      accept: "audio/mp4",
+      filesize: 3145728
+    }
+  },
+  messages: {
+    audio: {
+      required: "Select a file",
+      accept: "File must be audio",
+      filesize: "Max allowed: 3MB"
+    }
+  },
+  submitHandler: function(e) {
+   e.preventDefault();
+   $("#cargandoaudio").css("display", "inline");
+   $('#botonaudio').attr('disabled','disabled');
+    var laurl = $("#formaaudio").attr("action");
+    var ladata = $("#formaaudio").serializefiles();
+    $.ajax({
+     enctype: "multipart/form-data",
+     type: "POST",
+     url: laurl,
+     data: ladata,
+     cache: false,
+     success: function(response) {
+      $('section').html(response);
+     }
+    });
+   }
+});
+
+$("#formavideo").validate({
+  rules: {
+    video: {
+      required: true,
+      accept: "video/mov",
+      filesize: 3145728
+    }
+  },
+  messages: {
+    video: {
+      required: "Select a file",
+      accept: "File must be video",
+      filesize: "Max allowed: 3MB"
+    }
+  },
+  submitHandler: function(e) {
+   e.preventDefault();
+   $("#cargandovideo").css("display", "inline");
+   $('#botonvideo').attr('disabled','disabled');
+    var laurl = $("#formavideo").attr("action");
+    var ladata = $("#formavideo").serializefiles();
+    $.ajax({
+     enctype: "multipart/form-data",
+     type: "POST",
+     url: laurl,
+     data: ladata,
+     cache: false,
+     success: function(response) {
+      $('section').html(response);
+     }
+    });
+   }
+});
+
+$("#formaphotogallery").validate({
+  rules: {
+    photo: {
+      required: true,
+      accept: "image/jpeg",
+      filesize: 3145728
+    }
+  },
+  messages: {
+    photo: {
+      required: "Select a file",
+      accept: "File must be jpeg",
+      filesize: "Max allowed: 3MB"
+    }
+  },
+  submitHandler: function(e) {
+   e.preventDefault();
+   $("#cargandophotogallery").css("display", "inline");
+   $('#botonphotogallery').attr('disabled','disabled');
+    var laurl = $("#formaphotogallery").attr("action");
+    var ladata = $("#formaphotogallery").serializefiles();
+    $.ajax({
+     enctype: "multipart/form-data",
+     type: "POST",
+     url: laurl,
+     data: ladata,
+     cache: false,
+     success: function(response) {
+      $('section').html(response);
+     }
+    });
+   }
+});
+
+ $("input:text:visible:first").focus();
+</script>
